@@ -8,17 +8,21 @@ def upload_path(instance, filename):
 
 class UserManager(BaseUserManager):
 
+    # ユーザ名とパスワードでログインしたい場合は必要ないが、今回のようにカスタマイズしたい場合はこのようにする
+    # emailを使ったログインするようにオーバーライドする
     def create_user(self, email, password=None, **extra_fields):
 
         if not email:
             raise ValueError('email is must')
 
+        # emailを正規化してDBに入れるようにしてる
         user = self.model(email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
+    # 上記のcreate_userをオーバーライドしたら下記もオーバーライドする必要が出てくる
     def create_superuser(self, email, password):
         user = self.create_user(email, password)
         user.is_staff = True
@@ -82,4 +86,4 @@ class Message(models.Model):
     )
 
     def __str__(self):
-        return str(self.sender)
+        return self.sender
