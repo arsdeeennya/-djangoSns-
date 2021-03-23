@@ -2,14 +2,15 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.conf import settings
 
+# 普通にファイル名指定してもOK、今回はメソッドで作ってるけど
 def upload_path(instance, filename):
     ext = filename.split('.')[-1]
     return '/'.join(['image', str(instance.userPro.id)+str(instance.nickName)+str(".")+str(ext)])
 
 class UserManager(BaseUserManager):
 
-    # ユーザ名とパスワードでログインしたい場合は必要ないが、今回のようにカスタマイズしたい場合はこのようにする
-    # emailを使ったログインするようにオーバーライドする
+    # **で引数追加する意味あるのか？
+    # ドキュメントコピーすればOK
     def create_user(self, email, password=None, **extra_fields):
 
         if not email:
