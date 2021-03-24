@@ -47,6 +47,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     authentication_classes = (authentication.TokenAuthentication,)
     permission_classes = (permissions.IsAuthenticated, custompermissions.ProfilePermission)
 
+    # userProにユーザを割り当ててからprofileをつくるようにする、こうすることでフロントで割り当てる必要がなくなる
     def perform_create(self, serializer):
         serializer.save(userPro=self.request.user)
 
