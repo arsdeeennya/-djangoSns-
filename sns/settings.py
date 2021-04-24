@@ -37,14 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-	"rest_framework",
-	"rest_framework.authtoken",
-	"core.apps.CoreConfig",
-	"api_user.apps.ApiUserConfig",
-	"api_dm.apps.ApiDmConfig",
+	'rest_framework',
+    'rest_framework.authtoken',
+    'core.apps.CoreConfig',
+    'api_user.apps.ApiUserConfig',
+    'api_dm.apps.ApiDmConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +54,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000"
 ]
 
 ROOT_URLCONF = 'sns.urls'
@@ -121,6 +127,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+
+# email,passwordのようなカスタムユーザつくるときに設定する
+AUTH_USER_MODEL = 'core.User'
 
 STATIC_URL = '/static/'
 
